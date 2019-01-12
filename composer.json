@@ -1,0 +1,31 @@
+{
+    "name": "s-hiroshi/hs-scan-directory",
+    "description": "Script to scan directories made symfony4 console command.",
+    "type": "symfony/console",
+    "require": {
+        "symfony/console": "^4.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+      "psr-4": {
+        "HS\\Scan\\": "src/"
+      }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "HS\\Scan\\": [
+          "tests/",
+          "tests/Fake"
+        ]
+      }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hiroshi Sawai",
+            "email": "info@info-town.jp"
+        }
+    ]
+}

@@ -3,7 +3,6 @@
 
 namespace HS\Scan\Services;
 
-
 class FileCountScan extends AbstractScan
 {
 

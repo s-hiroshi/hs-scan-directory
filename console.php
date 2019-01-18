@@ -3,12 +3,13 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
 
-$fileScan        = new \HS\Scan\Services\FileScan();
-$fileCountScan   = new \HS\Scan\Services\FileCountScan();
-$updatedFileScan = new \HS\Scan\Services\UpdatedFileScan();
+$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
+$fileScan        = new \HS\Scan\Services\FileScan($dispatcher);
+$fileCountScan   = new \HS\Scan\Services\FileCountScan($dispatcher);
+$updatedFileScan = new \HS\Scan\Services\UpdatedFileScan($dispatcher);
 
 $application = new Application('hs-scan', '0.0.1');
-$application->add(new \HS\Scan\Command\FileScanCommand($fileScan));
+$application->add(new \HS\Scan\Command\FileScanCommand($fileScan, $dispatcher));
 $application->add(new \HS\Scan\Command\FileCountScanCommand($fileCountScan));
 $application->add(new \HS\Scan\Command\UpdatedFileScanCommand($updatedFileScan));
 try {

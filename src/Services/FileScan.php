@@ -12,7 +12,6 @@ class FileScan extends AbstractScan
      */
     public function execute(string $directory = null): array
     {
-
         return $this->getFiles($directory);
     }
 }

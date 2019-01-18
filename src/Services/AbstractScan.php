@@ -4,9 +4,18 @@
 namespace HS\Scan\Services;
 
 
+use HS\Scan\Event\ExclusionEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+
 abstract class AbstractScan
 {
     protected $list;
+    protected $dispatcher;
+    
+    public function __construct(EventDispatcher $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
+    }
 
     /**
      * @param string $directory
@@ -24,6 +33,11 @@ abstract class AbstractScan
             $path = rtrim($directory, '/').'/'.$file;
             if (is_file($path)) {
                 $this->list[] = $path;
+                continue;
+            }
+            $event = new ExclusionEvent($path);
+            $this->dispatcher->dispatch(ExclusionEvent::NAME, $event);
+            if ($event->isExcluded()) {
                 continue;
             }
             $this->scan($path);

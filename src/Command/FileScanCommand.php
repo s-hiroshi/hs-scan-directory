@@ -1,8 +1,8 @@
 <?php
 
-namespace HS\Scan\Command;
+namespace SH\Scan\Command;
 
-use HS\Scan\Services\AbstractScan;
+use SH\Scan\Services\FileScan;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,11 +10,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FileScanCommand extends Command
 {
-    const COMMAND_NAME = 'hs:scan:list';
+    const COMMAND_NAME = 'hs:scan';
 
     private $scan;
 
-    public function __construct(AbstractScan $scan)
+    public function __construct(FileScan $scan)
     {
         $this->scan = $scan;
         parent::__construct(self::COMMAND_NAME);
@@ -34,7 +34,7 @@ class FileScanCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $out = $this->scan->execute($input->getArgument('directory'));
+        $out = $this->scan->getFiles($input->getArgument('directory'));
         $output->writeln($out);
     }
 }

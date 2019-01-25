@@ -3,7 +3,7 @@
 
 namespace SH\Scan\EventListener;
 
-use Symfony\Component\EventDispatcher\Event;
+use SH\Scan\Event\EventInterface;
 
 class DirectoryListener
 {
@@ -14,9 +14,9 @@ class DirectoryListener
         $this->directories = $directory;
     }
 
-    public function onExcludeDirectory(Event $event)
+    public function onExcludeDirectory(EventInterface $event)
     {
-        $targetDirectory = $event->getDirectory();
+        $targetDirectory = $event->getTarget();
         foreach ($this->directories as $directory) {
             if ($directory === $targetDirectory) {
                 $event->setInclusion(false);

@@ -27,7 +27,11 @@ class FileListener
         $this->futureLimitTime   = $this->rootDirectoryTime->add($range);
         $this->specificFile      = $specificFile;
     }
-    public function onFindExceptionUpdatedFile(EventInterface $event)
+
+    /**
+     * @param EventInterface $event
+     */
+    public function onCheckFile(EventInterface $event)
     {
         $targetFile = $event->getTarget();
 //        $ext        = pathinfo($targetFile, PATHINFO_EXTENSION);

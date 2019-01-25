@@ -10,7 +10,7 @@ class FileEvent extends Event implements EventInterface
 {
     const NAME = 'app.file';
     private $file;
-    private $inclusion = false;
+    private $inclusion = true;
     public function __construct($file)
     {
         $this->file = $file;

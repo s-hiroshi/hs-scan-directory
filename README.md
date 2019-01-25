@@ -11,5 +11,5 @@ $ composer install
 Display file list in target directory(Including subdirectories).
 
 ```shell
-$ php console.php sh:scan {{target_directory}}
+$ php console.php scan {{target_directory}}
 ```

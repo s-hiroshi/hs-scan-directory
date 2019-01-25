@@ -10,12 +10,12 @@
     },
     "autoload": {
       "psr-4": {
-        "HS\\Scan\\": "src/"
+        "SH\\Scan\\": "src/"
       }
     },
     "autoload-dev": {
       "psr-4": {
-        "HS\\Scan\\": [
+        "SH\\Scan\\": [
           "tests/",
           "tests/Fake"
         ]

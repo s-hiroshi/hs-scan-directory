@@ -23,7 +23,7 @@ class FileScanCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('hs:scan:list')
+            ->setName('scan')
             ->setDescription('Display files list in directory(Including subdirectories)')
             ->addArgument('directory', InputArgument::REQUIRED, 'Relative directory path from console.php', null);
     }

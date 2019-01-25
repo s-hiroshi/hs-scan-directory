@@ -3,7 +3,9 @@
     "description": "Script to scan directories made symfony4 console command.",
     "type": "symfony/console",
     "require": {
-        "symfony/console": "^4.2"
+        "symfony/console": "^4.2",
+        "symfony/event-dispatcher": "^4.2",
+        "symfony/yaml": "^4.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5"

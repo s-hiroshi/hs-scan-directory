@@ -5,11 +5,16 @@ namespace SH\Scan\Services;
 
 
 use SH\Scan\Event\DirectoryEvent;
+use SH\Scan\Event\FileEvent;
+use SH\Scan\Event\PreEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
+/**
+ * @property array list
+ */
 class FileScan
 {
-    private $files;
+    private $files = [];
     private $dispatcher;
     
     public function __construct(EventDispatcher $dispatcher)
@@ -31,8 +36,15 @@ class FileScan
         );
         foreach ($files as $file) {
             $path = rtrim($directory, '/').'/'.$file;
+            
+            $this->dispatcher->dispatch(PreEvent::NAME, new PreEvent($path));
+            
             if (is_file($path)) {
-                $this->files[] = $path;
+                $fileEvent = new FileEvent($path);
+                $this->dispatcher->dispatch(FileEvent::NAME, $fileEvent);
+                if ($fileEvent->isInclusion()) {
+                    $this->files[] = $path;
+                }
                 continue;
             }
             $directoryEvent = new DirectoryEvent($path);

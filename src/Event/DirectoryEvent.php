@@ -5,7 +5,7 @@ namespace SH\Scan\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-class DirectoryEvent extends Event
+class DirectoryEvent extends Event implements EventInterface
 {
     const NAME = 'app.directory';
 
@@ -17,12 +17,12 @@ class DirectoryEvent extends Event
         $this->directory = $directory;
     }
 
-    public function getDirectory()
+    public function getTarget()
     {
         return $this->directory;
     }
 
-    function setInclusion(bool $value)
+    function setInclusion($value)
     {
         $this->inclusion = $value;
     }

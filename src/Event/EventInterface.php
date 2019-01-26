@@ -9,5 +9,5 @@ interface EventInterface
 
     public function getTarget();
     
-    public function setInclusion(bool $value);
+    public function setInclusion($value);
 }

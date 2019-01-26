@@ -22,7 +22,7 @@ class DirectoryEvent extends Event implements EventInterface
         return $this->directory;
     }
 
-    function setInclusion(bool $value)
+    function setInclusion($value)
     {
         $this->inclusion = $value;
     }

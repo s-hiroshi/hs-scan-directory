@@ -39,7 +39,13 @@ class FileScanCommand extends Command
             ->setName('scan')
             ->setDescription('サブディレクトリも含めてディレクトリを走査してファイルを出力')
             ->addArgument('directory', InputArgument::REQUIRED, '対象ディレクトリパス（console.phpからの相対パス）', null)
-            ->addArgument('range', InputArgument::REQUIRED, '許容する誤差（間隔指示子 例：2時間 PT2H', null)
+            ->addOption(
+                'interval',
+                'i',
+                InputOption::VALUE_OPTIONAL,
+                '指定ディレクトリ更新日がinterval以内の更新日のファイルを走査（形式は間隔指示子 例：2時間 PT2H）',
+                null
+            )
             ->addOption(
                 'exclusion',
                 'e',
@@ -47,7 +53,13 @@ class FileScanCommand extends Command
                 '除外するパスを記載したYamlファイルを指定（ファイル内に記載する除外ディレクトリはconsole.phpからの相対パス）',
                 null
             )
-            ->addOption('files', 'f', InputOption::VALUE_OPTIONAL, '特定のファイルのみを対象にする場合はパスを記載したYamlファイルを指定（ファイル内に記載する除外ディレクトリはconsole.phpからの相対パス）', null);
+            ->addOption(
+                'files',
+                'f',
+                InputOption::VALUE_OPTIONAL,
+                '特定のファイルのみを対象にする場合はパスを記載したYamlファイルを指定（ファイル内に記載する除外ディレクトリはconsole.phpからの相対パス）',
+                null
+            );
     }
 
     /**
@@ -64,7 +76,7 @@ class FileScanCommand extends Command
         if ($specificFile) {
             $specificFile = Yaml::parseFile($specificFile);
         }
-        $range = $input->getArgument('range');
+        $range = $input->getOption('interval');
         $interval = new \DateInterval($range);
         $fileListener = new FileListener($rootDirectoryTime, $interval, $specificFile);
         $this->dispatcher->addListener(FileEvent::NAME, [$fileListener, 'onCheckFile']);

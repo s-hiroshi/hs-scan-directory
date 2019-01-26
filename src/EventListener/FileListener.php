@@ -7,25 +7,12 @@ use SH\Scan\Event\EventInterface;
 
 class FileListener
 {
-    private $rootDirectoryTime;
-    private $pastLimitTime;
-    private $futureLimitTime;
-    private $inclusion = true;
-    private $specificFile;
+    private $handlers = [];
     
-    /**
-     * UpdatedCheckerListener constructor.
-     *
-     * @param \DateTimeImmutable $date
-     * @param \DateInterval      $range
-     * @param null               $specificFile
-     */
-    public function __construct(\DateTimeImmutable $date, \DateInterval $range, $specificFile = null)
+    public function addHandler($handler)
     {
-        $this->rootDirectoryTime = $date;
-        $this->pastLimitTime     = $this->rootDirectoryTime->sub($range);
-        $this->futureLimitTime   = $this->rootDirectoryTime->add($range);
-        $this->specificFile      = $specificFile;
+        $this->handlers[] = $handler;
+        
     }
 
     /**
@@ -34,27 +21,13 @@ class FileListener
     public function onCheckFile(EventInterface $event)
     {
         $targetFile = $event->getTarget();
-//        $ext        = pathinfo($targetFile, PATHINFO_EXTENSION);
-//        if ($ext !== 'php') {
-//            $event->setInclusion(false);
-//
-//            return;
-//        }
-        if ($this->specificFile) {
-            if (!in_array($targetFile, $this->specificFile)) {
-                $event->setInclusion(false);
-
-                return;
+        foreach($this->handlers as $handler) {
+            if (!$handler->execute($targetFile)) {
+               $event->setInclusion(false);
+               break;
             }
+            
         }
-        try {
-            $updatedTime = new \DateTimeImmutable('@'.filemtime($targetFile), new \DateTimeZone('Asia/Tokyo'));
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-
-        }
-        $this->inclusion = ( $updatedTime < $this->pastLimitTime || $this->futureLimitTime < $updatedTime ) ? true : false;
-        $event->setInclusion($this->inclusion);
     }
 }
 

@@ -1,4 +1,4 @@
-# can-directory
+# scan-directory
 
 サブディレクトリを含めて、ディレクトリを走査してファイルをリストアップします。
 
